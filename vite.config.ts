@@ -11,8 +11,12 @@ export default defineConfig({
     vueDevTools(),
   ],
   resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
+    alias: [
+      { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
+      { find: 'interfaces', replacement: fileURLToPath(new URL('./src/utils/interfaces', import.meta.url)) },
+      { find: 'types', replacement: fileURLToPath(new URL('./src/utils/types', import.meta.url)) },
+      { find: 'composables', replacement: fileURLToPath(new URL('./src/composables', import.meta.url)) },
+    ],
   },
+  
 })
