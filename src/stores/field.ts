@@ -4,33 +4,24 @@ import { type Cell } from 'types/cell.type';
 import { useField } from 'composables/useField';
 
 export const useFieldStore = defineStore('field', () => {
+   const isStarted = ref(false);
    const field = ref<Cell[][]>();
-   const height = ref<number>(10);
-   const width = ref<number>(10);
-   const bombsCount = ref<number>(25);
+   const height = ref(10);
+   const width = ref(10);
+   const bombsCount = ref(25);
 
-   function generate() {
+   function generate(firstCellX: number, firstCellY: number) {
       const { generateField } = useField();
-      field.value = generateField(height.value, width.value, bombsCount.value);
+      field.value = generateField(height.value, width.value, bombsCount.value, firstCellX, firstCellY);
    }
 
-   function setHeight(newHeight: number) {
-      height.value = newHeight;
-   }
-
-   function setWidth(newWidth: number) {
-      width.value = newWidth;
-   }
-
-   function setBombsCount(newBombsCount: number) {
-      bombsCount.value = newBombsCount;
-   }
 
    return {
+      isStarted,
       field,
       generate,
-      setHeight,
-      setWidth,
-      setBombsCount,
+      height,
+      width,
+      bombsCount,
    }
 })

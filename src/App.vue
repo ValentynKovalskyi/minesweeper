@@ -1,48 +1,23 @@
 <script setup lang="ts">
+import Field from './components/Field.vue';
+import GameStats from './components/GameStats.vue';
 import HelloWorld from './components/HelloWorld.vue'
 import { useField } from './composables/useField';
+import { useFieldStore } from './stores/field';
 
-const { generateField } = useField();
+const { generate } = useFieldStore();
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" @click="generateField(10,10,15)"/>
-    </div>
-  </header>
-
   <main>
+    <div class="flex flex-col items-center from-blue-950 to-blue-600 bg-gradient-to-t h-screen justify-center">
+      <div class="flex flex-row items-center justify-evenly w-1/2 h-14">
+        <GameStats :value="25" />
+        <button class="font-bold border-2 m-2 px-3 bg-yellow-500 rounded-md text-white" @click="generate(1,1)">Click</button>
+        <GameStats :value="100" />
+      </div>
+      <Field class="w-fit" />
+    </div>
+
   </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>

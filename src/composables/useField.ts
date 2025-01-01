@@ -1,26 +1,44 @@
+import type { Coords } from 'types/coords.type';
 import { type Cell } from 'types/cell.type';
 
 export const useField = () => {
-    function generateField(height: number, width: number, bombs: number): Cell[][] {
+    function generateField(height: number, width: number, bombs: number, firstCellX: number, firstCellY: number): Cell[][] {
         const maxId = height * width - 1;
 
         const result = [];
         
         let idCount = 0;
         let bombsRemaining = bombs;
+
+        const bombsCoords: Coords[] = [];
+
+        while(bombsRemaining) {
+            let x = Math.round(Math.random() * width)
+            let y = Math.round(Math.random() * height)
+
+            if(x === firstCellX && y === firstCellY) continue;
+            else if(bombsCoords.some(xy => xy.x === x && xy.y === y)) continue;
+            else {
+                bombsCoords.push({x, y});
+                --bombsRemaining;
+            }
+        }
         //generation of field
         for (let i = 0; i < height; ++i) {
             const row: Cell[] = [];
             result.push(row)
             for (let j = 0; j < width; ++j) {
+
+                //let isBomb = bombsRemaining ? Math.random() < bombsRemaining / (maxId - idCount): false
                 const newCell: Cell = {
+                    x: j,
+                    y: i,
+                    isBomb: bombsCoords.some((coords) => coords.x === j && coords.y === i),
                     id: idCount++,
-                    isBomb: bombsRemaining ? Math.random() < bombsRemaining / (maxId - idCount): false,
                     isFlagued: false,
                     isStepped: false,
                 }
 
-                if(newCell.isBomb) bombsRemaining--;
                 row.push(newCell)
             }
         }
@@ -41,7 +59,7 @@ export const useField = () => {
                 result[i][j].digit = calculatedDigit;
             }
         }
-
+        
         return result
     }
 
