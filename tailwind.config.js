@@ -6,7 +6,12 @@ export default {
     "./src/**/*.{js,ts,vue,html}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      "borderWidth": {
+        "1": "1px",
+        "5": "5px"
+      }
+    },
   },
   plugins: [],
 }

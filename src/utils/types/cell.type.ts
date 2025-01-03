@@ -1,9 +1,12 @@
-export type Cell = {
-    x: number,
-    y: number,
-    id: number,
+export interface ResolvedTile extends BaseTile {
     isBomb: boolean,
-    isFlagued: boolean,
     isStepped: boolean,
     digit?: number,
+}
+
+export interface BaseTile {
+    x: number,
+    y: number,
+    isFlagued: boolean,
+    id: number,
 }
